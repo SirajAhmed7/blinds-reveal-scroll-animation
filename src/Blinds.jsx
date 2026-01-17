@@ -20,20 +20,15 @@ function Blinds() {
 
   const blindFlapSize = 48;
   const blindFlapCount = 14;
-  const flapPullingPointX1 = 940;
+  const flapPullingPointX1 = 1000;
   const flapPullingPointX2 = 320;
   const separatorBlind = 3;
-  const separatorBlindY1 = 100;
-  const separatorBlindY2 = 200;
+  const separatorBlindY1 = 120;
+  const separatorBlindY2 = 260;
 
   useGSAP(() => {
     const mm = gsap.matchMedia();
     mm.add("(min-width: 1024px)", () => {
-      // const pullingPointCoords = {
-      //   x: flapPullingPointX,
-      //   y: 0,
-      // };
-
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -43,10 +38,6 @@ function Blinds() {
           pin: true,
         },
       });
-
-      // tl.to(pullingPointCoords, {
-      //   y: 200,
-      // });
 
       tl.to(linePathsRef.current, {
         morphSVG: (i) => {
@@ -124,6 +115,48 @@ function Blinds() {
         },
         "<"
       );
+
+      tl.to(linePathsRef.current, {
+        morphSVG: (i) => {
+          const y =
+            i >= separatorBlind ? blindFlapSize * (blindFlapCount - 1) : 0; // -1 because previously did y transform of the blindFlapSize in the first tween
+
+          const pullingX =
+            i < separatorBlind || i > blindFlapCount - 5
+              ? flapPullingPointX1
+              : flapPullingPointX2;
+
+          const linePath = `M0,${y} L${pullingX},${y} L1560,${y}`;
+
+          return linePath;
+        },
+        y: (i) => {
+          return i >= separatorBlind ? blindFlapSize : -blindFlapSize;
+        },
+      });
+
+      tl.to(
+        rectTopPathRef.current,
+        {
+          morphSVG: `M0,0 L1560,0 L1560,1 L0,1 Z`,
+          y: -blindFlapSize,
+        },
+        "<"
+      );
+
+      tl.to(
+        rectBottomPathRef.current,
+        {
+          morphSVG: `M0,${blindFlapSize * (blindFlapCount - 1)} 
+            L${flapPullingPointX2},${blindFlapSize * (blindFlapCount - 1)}
+            L1560,${blindFlapSize * (blindFlapCount - 1)} 
+            L1560,${blindFlapSize * blindFlapCount} L0,${
+            blindFlapSize * blindFlapCount
+          } Z`,
+          y: blindFlapSize,
+        },
+        "<"
+      );
     });
   });
 
@@ -146,50 +179,13 @@ function Blinds() {
           preserveAspectRatio="none"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-full"
+          className="size-full pointer-events-none"
         >
-          {/* {new Array(blindFlapCount).fill(1).map((_, i) => (
-            <Fragment key={"flap-" + i}>
-              <path
-                ref={(cur) => {
-                  if (cur && !rectPathsRef.current.includes(cur)) {
-                    rectPathsRef.current.push(cur);
-                  }
-                }}
-                d={getRectPath(i, blindFlapSize, flapPullingPointX)}
-                fill="oklch(21% 0.006 285.885)"
-              />
-              <path
-                ref={(cur) => {
-                  if (cur && !linePathsRef.current.includes(cur)) {
-                    linePathsRef.current.push(cur);
-                  }
-                }}
-                d={getLinePath(i, blindFlapSize, flapPullingPointX)}
-                stroke="oklch(55.2% 0.016 285.938)"
-                strokeWidth="1"
-                fill="none"
-              />
-            </Fragment>
-          ))} */}
-          {/* {new Array(blindFlapCount).fill(1).map((_, i) => (
-            <path
-              ref={(cur) => {
-                if (cur && !rectPathsRef.current.includes(cur)) {
-                  rectPathsRef.current.push(cur);
-                }
-              }}
-              d={getRectPath(i, blindFlapSize, flapPullingPointX)}
-              fill="oklch(21% 0.006 285.885)"
-              key={"rect-" + i}
-            />
-            ))} */}
-
           <path
             ref={rectTopPathRef}
             d={`M0,0 L1560,0 L1560,${blindFlapSize * separatorBlind} 
             L0,${blindFlapSize * separatorBlind} Z`}
-            fill="oklch(21% 0.006 285.885)"
+            fill="oklch(14.1% 0.005 285.823)"
           />
 
           <path
@@ -200,7 +196,7 @@ function Blinds() {
             L1560,${blindFlapSize * blindFlapCount} L0,${
               blindFlapSize * blindFlapCount
             } Z`}
-            fill="oklch(21% 0.006 285.885)"
+            fill="oklch(14.1% 0.005 285.823)"
           />
 
           {new Array(blindFlapCount).fill(1).map((_, i) => (
@@ -211,7 +207,7 @@ function Blinds() {
                 }
               }}
               d={getLinePath(i, blindFlapSize, flapPullingPointX1)}
-              stroke="oklch(55.2% 0.016 285.938)"
+              stroke="oklch(27.4% 0.006 286.033)"
               strokeWidth="1"
               fill="none"
               key={"line-" + i}
