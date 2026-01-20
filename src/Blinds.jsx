@@ -27,137 +27,137 @@ function Blinds() {
   const separatorBlindY2 = 260;
 
   useGSAP(() => {
-    const mm = gsap.matchMedia();
-    mm.add("(min-width: 1024px)", () => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: "+=100%",
-          scrub: true,
-          pin: true,
-        },
-      });
+    // const mm = gsap.matchMedia();
+    // mm.add("(min-width: 1024px)", () => {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top top",
+        end: "+=100%",
+        scrub: true,
+        pin: true,
+      },
+    });
 
-      tl.to(linePathsRef.current, {
-        morphSVG: (i) => {
-          if (i < separatorBlind || i > blindFlapCount - 5)
-            return getLinePath(i, blindFlapSize, flapPullingPointX1);
+    tl.to(linePathsRef.current, {
+      morphSVG: (i) => {
+        if (i < separatorBlind || i > blindFlapCount - 5)
+          return getLinePath(i, blindFlapSize, flapPullingPointX1);
 
-          const y =
-            separatorBlindY1 *
-            (1 - (i - separatorBlind) / (blindFlapCount - 8));
+        const y =
+          separatorBlindY1 * (1 - (i - separatorBlind) / (blindFlapCount - 8));
 
-          const linePath = `M0,${
-            blindFlapSize * (i + 1)
-          } L${flapPullingPointX1},${blindFlapSize * (i + 1) + y} L1560,${
-            blindFlapSize * (i + 1)
-          }`;
+        const linePath = `M0,${
+          blindFlapSize * (i + 1)
+        } L${flapPullingPointX1},${blindFlapSize * (i + 1) + y} L1560,${
+          blindFlapSize * (i + 1)
+        }`;
 
-          return linePath;
-        },
-        y: (i) => {
-          return i >= separatorBlind ? blindFlapSize : 0;
-        },
-      });
+        return linePath;
+      },
+      y: (i) => {
+        return i >= separatorBlind ? blindFlapSize : 0;
+      },
+    });
 
-      tl.to(
-        rectBottomPathRef.current,
-        {
-          morphSVG: `M0,${blindFlapSize * separatorBlind} 
+    tl.to(
+      rectBottomPathRef.current,
+      {
+        morphSVG: `M0,${blindFlapSize * separatorBlind} 
             L${flapPullingPointX1},${
-            blindFlapSize * separatorBlind +
-            separatorBlindY1 *
-              (1 - (separatorBlind - separatorBlind - 1) / (blindFlapCount - 8))
-          }
+              blindFlapSize * separatorBlind +
+              separatorBlindY1 *
+                (1 -
+                  (separatorBlind - separatorBlind - 1) / (blindFlapCount - 8))
+            }
             L1560,${blindFlapSize * separatorBlind} 
             L1560,${blindFlapSize * blindFlapCount} L0,${
-            blindFlapSize * blindFlapCount
-          } Z`,
-          y: blindFlapSize,
-        },
-        "<"
-      );
+              blindFlapSize * blindFlapCount
+            } Z`,
+        y: blindFlapSize,
+      },
+      "<",
+    );
 
-      tl.to(linePathsRef.current, {
-        morphSVG: (i) => {
-          if (i < separatorBlind || i > blindFlapCount - 5)
-            return getLinePath(i, blindFlapSize, flapPullingPointX1);
+    tl.to(linePathsRef.current, {
+      morphSVG: (i) => {
+        if (i < separatorBlind || i > blindFlapCount - 5)
+          return getLinePath(i, blindFlapSize, flapPullingPointX1);
 
-          const y =
-            separatorBlindY2 *
-            (1 - (i - separatorBlind) / (blindFlapCount - 8));
+        const y =
+          separatorBlindY2 * (1 - (i - separatorBlind) / (blindFlapCount - 8));
 
-          const linePath = `M0,${
-            blindFlapSize * (i + 1)
-          } L${flapPullingPointX2},${blindFlapSize * (i + 1) + y} L1560,${
-            blindFlapSize * (i + 1)
-          }`;
+        const linePath = `M0,${
+          blindFlapSize * (i + 1)
+        } L${flapPullingPointX2},${blindFlapSize * (i + 1) + y} L1560,${
+          blindFlapSize * (i + 1)
+        }`;
 
-          return linePath;
-        },
-      });
+        return linePath;
+      },
+    });
 
-      tl.to(
-        rectBottomPathRef.current,
-        {
-          morphSVG: `M0,${blindFlapSize * separatorBlind} 
+    tl.to(
+      rectBottomPathRef.current,
+      {
+        morphSVG: `M0,${blindFlapSize * separatorBlind} 
             L${flapPullingPointX2},${
-            blindFlapSize * separatorBlind +
-            separatorBlindY2 *
-              (1 - (separatorBlind - separatorBlind - 1) / (blindFlapCount - 8))
-          }
+              blindFlapSize * separatorBlind +
+              separatorBlindY2 *
+                (1 -
+                  (separatorBlind - separatorBlind - 1) / (blindFlapCount - 8))
+            }
             L1560,${blindFlapSize * separatorBlind} 
             L1560,${blindFlapSize * blindFlapCount} L0,${
-            blindFlapSize * blindFlapCount
-          } Z`,
-          y: blindFlapSize,
-        },
-        "<"
-      );
+              blindFlapSize * blindFlapCount
+            } Z`,
+        y: blindFlapSize,
+      },
+      "<",
+    );
 
-      tl.to(linePathsRef.current, {
-        morphSVG: (i) => {
-          const y =
-            i >= separatorBlind ? blindFlapSize * (blindFlapCount - 1) : 0; // -1 because previously did y transform of the blindFlapSize in the first tween
+    tl.to(linePathsRef.current, {
+      morphSVG: (i) => {
+        const y =
+          i >= separatorBlind ? blindFlapSize * (blindFlapCount - 1) : 0; // -1 because previously did y transform of the blindFlapSize in the first tween
 
-          const pullingX =
-            i < separatorBlind || i > blindFlapCount - 5
-              ? flapPullingPointX1
-              : flapPullingPointX2;
+        const pullingX =
+          i < separatorBlind || i > blindFlapCount - 5
+            ? flapPullingPointX1
+            : flapPullingPointX2;
 
-          const linePath = `M0,${y} L${pullingX},${y} L1560,${y}`;
+        const linePath = `M0,${y} L${pullingX},${y} L1560,${y}`;
 
-          return linePath;
-        },
-        y: (i) => {
-          return i >= separatorBlind ? blindFlapSize : -blindFlapSize;
-        },
-      });
+        return linePath;
+      },
+      y: (i) => {
+        return i >= separatorBlind ? blindFlapSize : -blindFlapSize;
+      },
+    });
 
-      tl.to(
-        rectTopPathRef.current,
-        {
-          morphSVG: `M0,0 L1560,0 L1560,1 L0,1 Z`,
-          y: -blindFlapSize,
-        },
-        "<"
-      );
+    tl.to(
+      rectTopPathRef.current,
+      {
+        morphSVG: `M0,0 L1560,0 L1560,1 L0,1 Z`,
+        y: -blindFlapSize,
+      },
+      "<",
+    );
 
-      tl.to(
-        rectBottomPathRef.current,
-        {
-          morphSVG: `M0,${blindFlapSize * (blindFlapCount - 1)} 
+    tl.to(
+      rectBottomPathRef.current,
+      {
+        morphSVG: `M0,${blindFlapSize * (blindFlapCount - 1)} 
             L${flapPullingPointX2},${blindFlapSize * (blindFlapCount - 1)}
             L1560,${blindFlapSize * (blindFlapCount - 1)} 
             L1560,${blindFlapSize * blindFlapCount} L0,${
-            blindFlapSize * blindFlapCount
-          } Z`,
-          y: blindFlapSize,
-        },
-        "<"
-      );
-    });
+              blindFlapSize * blindFlapCount
+            } Z`,
+        y: blindFlapSize,
+      },
+      "<",
+    );
+    // });
   });
 
   return (
