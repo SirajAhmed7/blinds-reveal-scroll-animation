@@ -8,7 +8,12 @@ function App() {
     <>
       <ReactLenis root />
       <div className="min-h-screen">
-        <Header heading={"Blinds Reveal Scroll"} githubLink={"#"} />
+        <Header
+          heading={"Blinds Reveal Scroll"}
+          githubLink={
+            "https://github.com/SirajAhmed7/blinds-reveal-scroll-animation"
+          }
+        />
         <Blinds />
       </div>
     </>

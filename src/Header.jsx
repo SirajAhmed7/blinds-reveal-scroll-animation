@@ -1,6 +1,6 @@
 function Header({ heading, githubLink }) {
   return (
-    <header className="fixed top-4 left-1/2 -translate-x-1/2 rounded-full bg-gray-500/20 border border-gray-50/10 backdrop-blur-2xl drop-shadow-2xl px-4 py-2 w-[calc(100%-40px)] md:w-full sm:max-w-md z-50">
+    <header className="fixed top-4 left-1/2 -translate-x-1/2 rounded-full bg-zinc-500/20 border border-zinc-50/10 backdrop-blur-2xl drop-shadow-2xl px-4 py-2 w-[calc(100%-40px)] md:w-full sm:max-w-md z-50">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl text-white">{heading}</h1>
 
